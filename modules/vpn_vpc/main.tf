@@ -110,7 +110,7 @@ resource "aws_iam_role_policy_attachment" "flow_logs" {
 resource "aws_flow_log" "vpc" {
   count                = var.enable_flow_logs ? 1 : 0
   log_destination_type = "cloud-watch-logs"
-  log_group_name       = aws_cloudwatch_log_group.vpc_flow_logs[0].name
+  log_destination      = aws_cloudwatch_log_group.vpc_flow_logs[count.index]
   iam_role_arn         = aws_iam_role.flow_logs[0].arn
   traffic_type         = var.flow_log_traffic_type
   vpc_id               = aws_vpc.this.id
